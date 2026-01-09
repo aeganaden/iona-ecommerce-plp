@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Hedvig_Letters_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import HeaderNavigation from "@/components/header-navigation";
+import SidebarFilter from "@/components/sidebar-filter";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -26,9 +27,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${hedvigSerif.variable} antialiased`}>
-        <div className="min-h-screen">
+        <div className="min-h-screen text-amber-900 flex flex-col">
           <HeaderNavigation />
-          {children}
+          <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 py-10 lg:flex-row">
+            <div className="w-full lg:w-60">
+              <SidebarFilter />
+            </div>
+            <main className="flex-1">
+              {children}
+            </main>
+          </div>
         </div>
       </body>
     </html>
