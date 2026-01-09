@@ -16,12 +16,12 @@ function IconButton({ count = 0, onClick, icon }: IconButtonProps) {
       as="button"
       type="button"
       onClick={onClick}
-      className="relative cursor-pointer inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-950 text-white transition-colors focus-visible:outline-none focus-visible:ring-2 hover:bg-amber-800"
+      className="relative cursor-pointer inline-flex h-10 w-10 items-center justify-center rounded-full text-amber-950 transition-colors focus-visible:outline-none focus-visible:ring-2 hover:bg-red-100"
       aria-label="Open shopping cart"
     >
       {icon && icon}
       {hasItems && (
-        <span className="absolute -top-1 -right-1 inline-flex min-w-[1.25rem] justify-center rounded-full bg-white px-1 text-[10px] font-semibold text-amber-950 border-2 border-amber-950">
+        <span className="absolute -top-0 -right-1 inline-flex min-w-[1.25rem] justify-center rounded-full bg-white px-1 text-[10px] font-semibold text-amber-950 border-2 border-amber-950">
           {count}
         </span>
       )}

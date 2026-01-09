@@ -3,7 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import IconButton from "./icon-button";
 import { ShoppingCartIcon } from "@heroicons/react/16/solid";
-import { HeartIcon } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/solid";
 
 const navLinks = [
   { href: "/dresses", label: "Dresses" },
@@ -31,9 +31,8 @@ function HeaderNavigation() {
             <Link
               key={href}
               href={href}
-              className={`text-sm font-sans cursor-pointer ${
-                pathname === href ? "text-amber-950" : "text-amber-800"
-              }`}
+              className={`text-sm font-sans cursor-pointer ${pathname === href ? "text-amber-950" : "text-amber-800"
+                }`}
             >
               {label}
             </Link>
@@ -47,6 +46,7 @@ function HeaderNavigation() {
         />
         <IconButton
           icon={<HeartIcon className="h-5 w-5" aria-hidden="true" />}
+          count={3}
         />
       </div>
     </nav>
