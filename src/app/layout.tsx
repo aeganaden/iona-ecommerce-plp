@@ -3,6 +3,7 @@ import { Hedvig_Letters_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import HeaderNavigation from "@/components/header-navigation";
 import SidebarFilter from "@/components/sidebar-filter";
+import Breadcrumbs from "@/components/breadcrumbs";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,11 +30,14 @@ export default function RootLayout({
       <body className={`${inter.variable} ${hedvigSerif.variable} antialiased`}>
         <div className="min-h-screen text-amber-900 flex flex-col">
           <HeaderNavigation />
-          <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 py-10 lg:flex-row">
+          <div className="mx-auto w-full max-w-7xl px-6 py-6">
+            <Breadcrumbs />
+          </div>
+          <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-6 pb-10 lg:flex-row">
             <div className="w-full lg:w-60">
               <SidebarFilter />
             </div>
-            <main className="flex-1">
+            <main className="flex-1 space-y-8">
               {children}
             </main>
           </div>
