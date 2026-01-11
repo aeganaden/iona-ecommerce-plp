@@ -192,13 +192,13 @@ function SidebarFilter() {
                     <Button
                         type="button"
                         onClick={handleReset}
-                        className="inline-flex w-full items-center justify-center rounded-lg border border-amber-950 px-4 py-3 text-sm font-semibold text-amber-700 transition hover:border-red-300 hover:bg-red-50"
+                        className="inline-flex cursor-pointer w-full items-center justify-center rounded-lg border border-amber-950 px-4 py-3 text-sm font-semibold text-amber-700 transition hover:border-red-300 hover:bg-red-50"
                     >
                         Reset filters
                     </Button>
                     <Button
                         type="submit"
-                        className="inline-flex w-full items-center justify-center rounded-lg bg-amber-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-800"
+                        className="inline-flex cursor-pointer w-full items-center justify-center rounded-lg bg-amber-900 px-4 py-3 text-sm font-semibold text-white transition hover:bg-amber-800"
                     >
                         Apply filters
                     </Button>
