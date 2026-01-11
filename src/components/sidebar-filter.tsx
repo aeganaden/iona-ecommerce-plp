@@ -60,13 +60,17 @@ function SidebarFilter() {
     return (
         <aside className="w-full rounded-2xl">
             <header>
-                <p className="font-bold uppercase tracking-wide text-amber-950">Filters</p>
-
+                <p className="font-bold uppercase tracking-wide text-amber-950">
+                    Filters
+                </p>
             </header>
 
             <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
                 <Field>
-                    <Label htmlFor="search" className="text-sm font-medium font-serif text-amber-950">
+                    <Label
+                        htmlFor="search"
+                        className="text-sm font-medium font-serif text-amber-950"
+                    >
                         Search
                     </Label>
                     <Input
@@ -81,15 +85,23 @@ function SidebarFilter() {
                 </Field>
 
                 <Field>
-                    <Label htmlFor="sortBy" className="text-sm font-medium font-serif text-amber-900">
+                    <Label
+                        htmlFor="sortBy"
+                        className="text-sm font-medium font-serif text-amber-900"
+                    >
                         Sort by
                     </Label>
                     <div className="mt-2 relative">
                         <input type="hidden" name="sortBy" value={sortBy} />
                         <Listbox value={sortBy} onChange={setSortBy}>
                             <ListboxButton className="flex w-full items-center justify-between rounded-lg border border-amber-950 bg-white px-3 py-3 text-sm text-amber-900 focus-visible:outline-none focus-visible:ring-2">
-                                <span>{sortOptions.find((option) => option.value === sortBy)?.label}</span>
-                                <ChevronUpDownIcon className="h-4 w-4 text-amber-950" aria-hidden="true" />
+                                <span>
+                                    {sortOptions.find((option) => option.value === sortBy)?.label}
+                                </span>
+                                <ChevronUpDownIcon
+                                    className="h-4 w-4 text-amber-950"
+                                    aria-hidden="true"
+                                />
                             </ListboxButton>
                             <ListboxOptions className="absolute mt-2 max-h-60 w-full overflow-auto rounded-xl border bg-white p-1 text-sm shadow-lg">
                                 {sortOptions.map(({ label, value }) => (
@@ -107,10 +119,15 @@ function SidebarFilter() {
                 </Field>
 
                 <Fieldset className="space-y-3">
-                    <Legend className="text-sm font-medium text-amber-900 font-serif">Price range</Legend>
+                    <Legend className="text-sm font-medium text-amber-900 font-serif">
+                        Price range
+                    </Legend>
                     <div className="grid grid-cols-2 gap-3">
                         <Field>
-                            <Label htmlFor="minPrice" className="text-xs uppercase text-amber-950">
+                            <Label
+                                htmlFor="minPrice"
+                                className="text-xs uppercase text-amber-950"
+                            >
                                 Min
                             </Label>
                             <Input
@@ -126,7 +143,10 @@ function SidebarFilter() {
                             />
                         </Field>
                         <Field>
-                            <Label htmlFor="maxPrice" className="text-xs uppercase text-amber-950">
+                            <Label
+                                htmlFor="maxPrice"
+                                className="text-xs uppercase text-amber-950"
+                            >
                                 Max
                             </Label>
                             <Input
@@ -145,12 +165,15 @@ function SidebarFilter() {
                 </Fieldset>
 
                 <Fieldset>
-                    <Legend className="text-sm font-medium text-amber-900 font-serif">Brands</Legend>
+                    <Legend className="text-sm font-medium text-amber-900 font-serif">
+                        Brands
+                    </Legend>
                     <div className="mt-3 space-y-2">
                         {brands.map(({ label, value }) => (
                             <Label
                                 key={value}
-                                className="flex items-center gap-3 rounded-lg border border-transparent px-2 py-1 text-sm text-amber-950 transition"
+                                className="flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-2 py-1 text-sm text-amber-950 transition"
+                                onClick={() => toggleBrand(value)}
                             >
                                 <Checkbox
                                     checked={selectedBrands.includes(value)}
@@ -164,8 +187,6 @@ function SidebarFilter() {
                         ))}
                     </div>
                 </Fieldset>
-
-
 
                 <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                     <Button
