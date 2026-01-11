@@ -93,13 +93,13 @@ function ProductCard({ product }: ProductCardProps) {
             </div>
 
             <div className="p-6">
-                <div className="flex items-center justify-between text-xs font-semibold uppercase py-2 text-amber-700">
-                    <span>{product.category}</span>
-                    <span>{product.brand}</span>
+                <div className="flex items-center justify-between text-xs font-semibold uppercase py-2 cursor-pointer">
+                    <span className="text-amber-700">{product.category.replace(/-/g, " ")}</span>
+                    <span className="text-gray-700">{product.brand}</span>
                 </div>
 
                 <div className="space-y-3">
-                    <h3 className="font-serif font-semibold text-amber-950">
+                    <h3 className="font-serif font-semibold text-amber-950 cursor-pointer">
                         {product.title}
                     </h3>
                     <div className="flex items-center gap-3 text-sm text-amber-700">
