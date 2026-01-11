@@ -31,8 +31,9 @@ function HeaderNavigation() {
             <Link
               key={href}
               href={href}
-              className={`text-sm font-sans cursor-pointer ${pathname === href ? "text-amber-950" : "text-amber-800"
-                }`}
+              className={`text-sm font-sans cursor-pointer ${
+                pathname === href ? "text-amber-950" : "text-amber-800"
+              }`}
             >
               {label}
             </Link>

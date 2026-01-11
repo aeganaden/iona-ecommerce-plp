@@ -28,18 +28,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${hedvigSerif.variable} antialiased`}>
-        <div className="min-h-screen text-amber-900 flex flex-col">
+        <div className="min-h-screen text-amber-900 flex flex-col mx-auto w-full">
           <HeaderNavigation />
-          <div className="mx-auto w-full max-w-7xl px-6 py-6">
+          <div className="px-30 py-6">
             <Breadcrumbs />
           </div>
-          <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-8 px-6 pb-10 lg:flex-row">
+          <div className="flex w-full flex-1 flex-col gap-8 px-30 pb-10 lg:flex-row">
             <div className="w-full lg:w-60">
               <SidebarFilter />
             </div>
-            <main className="flex-1 space-y-8">
-              {children}
-            </main>
+            <main className="flex-1 space-y-8">{children}</main>
           </div>
         </div>
       </body>
