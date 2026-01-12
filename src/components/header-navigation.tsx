@@ -28,7 +28,7 @@ function HeaderNavigation() {
 
   return (
     <nav className="border-b border-gray-300">
-      <div className="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 md:px-10 lg:px-20 xl:px-30">
+      <div className="flex flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 md:px-10 lg:px-20 xl:px-30">
         <div className="flex items-center gap-10">
           <Link
             href="/"
@@ -120,7 +120,7 @@ function HeaderNavigation() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <MenuItems className="absolute left-[-40px] z-20 mt-2 w-[min(22rem,calc(100vw-2rem))] origin-top-left rounded-2xl bg-white py-3 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <MenuItems className="absolute sm:left-[-40px] z-20 mt-2 w-[min(22rem,calc(100vw-2rem))] origin-top-left rounded-2xl bg-white py-3 shadow-lg ring-1 ring-black/5 focus:outline-none">
                 <div className="px-4 pb-2 text-sm font-semibold text-amber-900">
                   Favorites
                 </div>
