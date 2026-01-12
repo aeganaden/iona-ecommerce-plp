@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
     Button,
     Checkbox,
@@ -16,13 +17,6 @@ import {
 } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
-const brands = [
-    { label: "Aurora Atelier", value: "aurora" },
-    { label: "Lumen & Co.", value: "lumen" },
-    { label: "Northwind", value: "northwind" },
-    { label: "Solstice Studio", value: "solstice" },
-];
-
 const sortOptions = [
     { label: "Relevance", value: "relevance" },
     { label: "Popularity", value: "popularity" },
@@ -30,18 +24,28 @@ const sortOptions = [
     { label: "Price: High to Low", value: "price-desc" },
 ];
 
-function SidebarFilter() {
-    const [search, setSearch] = useState("");
-    const [minPrice, setMinPrice] = useState("");
-    const [maxPrice, setMaxPrice] = useState("");
-    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-    const [sortBy, setSortBy] = useState("relevance");
+interface SidebarFilterProps {
+    brands?: string[];
+}
 
-    const toggleBrand = (value: string) => {
+function SidebarFilter({ brands = [] }: SidebarFilterProps) {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const [search, setSearch] = useState(() => searchParams.get("q") || "");
+    const [minPrice, setMinPrice] = useState(() => searchParams.get("minPrice") || "");
+    const [maxPrice, setMaxPrice] = useState(() => searchParams.get("maxPrice") || "");
+    const [selectedBrands, setSelectedBrands] = useState<string[]>(() => {
+        const brandValues = searchParams.get("brands");
+        return brandValues ? brandValues.split(",").filter(Boolean) : [];
+    });
+    const [sortBy, setSortBy] = useState(() => searchParams.get("sort") || "relevance");
+
+    const toggleBrand = (brand: string) => {
         setSelectedBrands((prev) =>
-            prev.includes(value)
-                ? prev.filter((brand) => brand !== value)
-                : [...prev, value]
+            prev.includes(brand)
+                ? prev.filter((b) => b !== brand)
+                : [...prev, brand]
         );
     };
 
@@ -51,10 +55,21 @@ function SidebarFilter() {
         setMaxPrice("");
         setSelectedBrands([]);
         setSortBy("relevance");
+        router.push("?");
     };
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        const params = new URLSearchParams();
+        if (search) params.append("q", search);
+        if (minPrice) params.append("minPrice", minPrice);
+        if (maxPrice) params.append("maxPrice", maxPrice);
+        if (selectedBrands.length > 0) params.append("brands", selectedBrands.join(","));
+        if (sortBy !== "relevance") params.append("sort", sortBy);
+
+        const queryString = params.toString();
+        router.push(queryString ? `?${queryString}` : "?");
     };
 
     return (
@@ -168,24 +183,28 @@ function SidebarFilter() {
                     <Legend className="text-sm font-medium text-amber-900 font-serif">
                         Brands
                     </Legend>
-                    <div className="mt-3 space-y-2">
-                        {brands.map(({ label, value }) => (
-                            <Label
-                                key={value}
-                                className="flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-2 py-1 text-sm text-amber-950 transition"
-                                onClick={() => toggleBrand(value)}
-                            >
-                                <Checkbox
-                                    checked={selectedBrands.includes(value)}
-                                    onChange={() => toggleBrand(value)}
-                                    className="group inline-flex h-5 w-5 items-center justify-center rounded border border-amber-950 bg-white text-white transition data-[checked]:border-amber-900 data-[checked]:bg-amber-900"
+                    {brands.length > 0 ? (
+                        <div className="mt-3 space-y-2">
+                            {brands.map((brand) => (
+                                <Label
+                                    key={brand}
+                                    className="flex cursor-pointer items-center gap-3 rounded-lg border border-transparent px-2 py-1 text-sm text-amber-950 transition"
+                                    onClick={() => toggleBrand(brand)}
                                 >
-                                    <CheckIcon className="h-3 w-3 opacity-0 transition group-data-[checked]:opacity-100" />
-                                </Checkbox>
-                                {label}
-                            </Label>
-                        ))}
-                    </div>
+                                    <Checkbox
+                                        checked={selectedBrands.includes(brand)}
+                                        onChange={() => toggleBrand(brand)}
+                                        className="group inline-flex h-5 w-5 items-center justify-center rounded border border-amber-950 bg-white text-white transition data-[checked]:border-amber-900 data-[checked]:bg-amber-900"
+                                    >
+                                        <CheckIcon className="h-3 w-3 opacity-0 transition group-data-[checked]:opacity-100" />
+                                    </Checkbox>
+                                    {brand}
+                                </Label>
+                            ))}
+                        </div>
+                    ) : (
+                        <p className="mt-3 text-xs text-amber-700">No brands available</p>
+                    )}
                 </Fieldset>
 
                 <div className="flex flex-col gap-3 pt-2 sm:flex-row">

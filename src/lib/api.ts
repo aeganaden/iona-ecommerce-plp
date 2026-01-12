@@ -16,10 +16,13 @@ interface APIResponse {
   limit: number;
 }
 
-export async function getAllProducts(): Promise<Product[]> {
+export async function getAllProducts(
+  sortBy?: string,
+  order?: "asc" | "desc"
+): Promise<Product[]> {
   try {
     const productPromises = ALL_CATEGORIES.map((category) =>
-      getProductsByCategory(category)
+      getProductsByCategory(category, sortBy, order)
     );
 
     const results = await Promise.all(productPromises);
@@ -46,10 +49,22 @@ export async function getProductById(id: number): Promise<Product | null> {
   }
 }
 
-export async function searchProducts(query: string): Promise<Product[]> {
+export async function searchProducts(
+  query: string,
+  sortBy?: string,
+  order?: "asc" | "desc"
+): Promise<Product[]> {
   try {
+    const params = new URLSearchParams();
+    params.append("q", query);
+
+    if (sortBy) {
+      params.append("sortBy", sortBy);
+      params.append("order", order || "asc");
+    }
+
     const response = await fetch(
-      `${API_BASE_URL}/products/search?q=${encodeURIComponent(query)}`,
+      `${API_BASE_URL}/products/search?${params.toString()}`,
       {
         next: { revalidate: 3600 },
       }
@@ -64,15 +79,28 @@ export async function searchProducts(query: string): Promise<Product[]> {
 }
 
 export async function getProductsByCategory(
-  category: string
+  category: string,
+  sortBy?: string,
+  order?: "asc" | "desc"
 ): Promise<Product[]> {
   try {
-    const response = await fetch(
-      `${API_BASE_URL}/products/category/${encodeURIComponent(category)}`,
-      {
-        next: { revalidate: 3600 },
-      }
-    );
+    let url = `${API_BASE_URL}/products/category/${encodeURIComponent(
+      category
+    )}`;
+    const params = new URLSearchParams();
+
+    if (sortBy) {
+      params.append("sortBy", sortBy);
+      params.append("order", order || "asc");
+    }
+
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+
+    const response = await fetch(url, {
+      next: { revalidate: 3600 },
+    });
 
     const data: APIResponse = await response.json();
     return data.products;

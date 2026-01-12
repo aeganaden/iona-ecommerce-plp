@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Hedvig_Letters_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import HeaderNavigation from "@/components/header-navigation";
-import SidebarFilter from "@/components/sidebar-filter";
 import Breadcrumbs from "@/components/breadcrumbs";
 
 const inter = Inter({
@@ -33,12 +32,7 @@ export default function RootLayout({
           <div className="px-30 py-6">
             <Breadcrumbs />
           </div>
-          <div className="flex w-full flex-1 flex-col gap-8 px-30 pb-10 lg:flex-row">
-            <div className="w-full lg:w-60">
-              <SidebarFilter />
-            </div>
-            <main className="flex-1 space-y-8">{children}</main>
-          </div>
+          <div className="px-30 pb-10 flex-1">{children}</div>
         </div>
       </body>
     </html>
