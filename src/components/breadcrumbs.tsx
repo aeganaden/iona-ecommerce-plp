@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const pages: Record<string, { title: string; description: string }> = {
   "/": {
@@ -33,6 +33,7 @@ const pages: Record<string, { title: string; description: string }> = {
 
 function buildBreadcrumbs(pathname: string) {
   const segments = pathname.split("/").filter(Boolean);
+
   if (segments.length === 0) {
     return [
       { href: "/", label: "Home" },
@@ -51,18 +52,27 @@ function buildBreadcrumbs(pathname: string) {
 
 function Breadcrumbs() {
   const pathname = usePathname();
-  const segments = pathname.split("/").filter(Boolean);
-  const crumbs = buildBreadcrumbs(pathname);
+  const searchParams = useSearchParams();
 
-  const title = segments.length
-    ? segments[segments.length - 1]
-    : "All Products";
-  const description =
-    "Explore curated fashion, jewelry, and accessories from independent designers.";
-  const pageContent = pages[pathname] ?? {
-    title,
-    description,
-  };
+  let crumbs = buildBreadcrumbs(pathname);
+
+  const isProductPage = /^\/product\/(\d+)(?:\/)?$/.test(pathname);
+
+  if (isProductPage) {
+    const categoryFromUrl = searchParams.get("category");
+    if (categoryFromUrl && crumbs.length > 1) {
+      const formattedCategory = categoryFromUrl.replace(/-/g, " ");
+      const homeCrumb = crumbs[0];
+      const lastCrumb = {
+        ...crumbs[crumbs.length - 1],
+        label: formattedCategory,
+      };
+
+      crumbs = [homeCrumb, lastCrumb];
+    }
+  }
+
+  const pageContent = pages[pathname];
 
   return (
     <section className="space-y-3">
@@ -95,13 +105,14 @@ function Breadcrumbs() {
           })}
         </ol>
       </nav>
-
-      <div className="space-y-2">
-        <h1 className="text-3xl font-serif font-semibold text-amber-950">
-          {pageContent.title}
-        </h1>
-        <p className="text-sm text-amber-700">{pageContent.description}</p>
-      </div>
+      {pageContent && (
+        <div className="space-y-2">
+          <h1 className="text-3xl font-serif font-semibold text-amber-950">
+            {pageContent.title}
+          </h1>
+          <p className="text-sm text-amber-700">{pageContent.description}</p>
+        </div>
+      )}
     </section>
   );
 }
