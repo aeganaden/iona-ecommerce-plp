@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Hedvig_Letters_Serif, Inter } from "next/font/google";
 import "./globals.css";
 import HeaderNavigation from "@/components/header-navigation";
@@ -32,7 +33,9 @@ export default function RootLayout({
           <HeaderNavigationProvider>
             <HeaderNavigation />
             <div className="px-30 py-6">
-              <Breadcrumbs />
+              <Suspense>
+                <Breadcrumbs />
+              </Suspense>
             </div>
             <div className="px-30 pb-10 flex-1">{children}</div>
           </HeaderNavigationProvider>
