@@ -32,12 +32,14 @@ export default function RootLayout({
         <div className="min-h-screen text-amber-900 flex flex-col mx-auto w-full">
           <HeaderNavigationProvider>
             <HeaderNavigation />
-            <div className="px-30 py-6">
+            <div className="px-4 py-4 sm:px-6 md:px-10 lg:px-20 xl:px-30">
               <Suspense>
                 <Breadcrumbs />
               </Suspense>
             </div>
-            <div className="px-30 pb-10 flex-1">{children}</div>
+            <div className="px-4 pb-10 flex-1 sm:px-6 md:px-10 lg:px-20 xl:px-30">
+              {children}
+            </div>
           </HeaderNavigationProvider>
         </div>
       </body>
