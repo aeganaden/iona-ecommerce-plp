@@ -88,7 +88,7 @@ export const getCatalogData = cache(
     // Extract brands for filter UI
     const brands = Array.from(
       new Set(products.map((product) => product.brand).filter(Boolean))
-    ).sort((a, b) => a.localeCompare(b)) as string[];
+    ).sort((a, b) => (a as string).localeCompare(b as string)) as string[];
 
     // Client-side price filtering (API doesn't support this)
     const min = filters.minPrice ? Number(filters.minPrice) : 0;

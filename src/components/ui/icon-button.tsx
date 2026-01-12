@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@headlessui/react";
 import type { MouseEventHandler, ReactNode } from "react";
 
 interface IconButtonProps {
@@ -12,12 +11,11 @@ function IconButton({ count = 0, onClick, icon }: IconButtonProps) {
   const hasItems = typeof count === "number" && count > 0;
 
   return (
-    <Button
-      as="button"
+    <button
       type="button"
       onClick={onClick}
       className="relative cursor-pointer inline-flex h-10 w-10 items-center justify-center rounded-full text-amber-950 transition-colors focus-visible:outline-none focus-visible:ring-2 hover:bg-red-100"
-      aria-label="Open shopping cart"
+      aria-label="Icon button"
     >
       {icon && icon}
       {hasItems && (
@@ -25,7 +23,7 @@ function IconButton({ count = 0, onClick, icon }: IconButtonProps) {
           {count}
         </span>
       )}
-    </Button>
+    </button>
   );
 }
 

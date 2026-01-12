@@ -1,12 +1,8 @@
 import { getProductById } from "@/lib/api";
 import { notFound } from "next/navigation";
-import {
-  StarIcon,
-  HeartIcon,
-  ShoppingCartIcon,
-} from "@heroicons/react/24/outline";
-import { StarIcon as StarIconSolid } from "@heroicons/react/24/solid";
 import ImageGallery from "../_components/image-gallery";
+import ProductActions from "../_components/product-actions";
+import RatingStars from "@/components/ui/rating-stars";
 
 type ParamsPromise = Promise<{ id: string }>;
 
@@ -22,12 +18,9 @@ export default async function ProductPage({
     notFound();
   }
 
-  const discountedPrice = product.discountPercentage
-    ? product.price * (1 - product.discountPercentage / 100)
-    : product.price;
+  const discountedPrice =
+    product.price * (1 - product.discountPercentage / 100);
 
-  const fullStars = Math.floor(product.rating);
-  const hasHalfStar = product.rating % 1 >= 0.5;
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="grid gap-8 lg:grid-cols-2">
@@ -47,32 +40,7 @@ export default async function ProductPage({
 
           {/* Rating */}
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, index) => {
-                if (index < fullStars) {
-                  return (
-                    <StarIconSolid
-                      key={index}
-                      className="h-5 w-5 text-amber-500"
-                    />
-                  );
-                } else if (index === fullStars && hasHalfStar) {
-                  return (
-                    <div key={index} className="relative">
-                      <StarIcon className="h-5 w-5 text-amber-500" />
-                      <StarIconSolid
-                        className="absolute left-0 top-0 h-5 w-5 text-amber-500"
-                        style={{ clipPath: "inset(0 50% 0 0)" }}
-                      />
-                    </div>
-                  );
-                } else {
-                  return (
-                    <StarIcon key={index} className="h-5 w-5 text-amber-300" />
-                  );
-                }
-              })}
-            </div>
+            <RatingStars rating={product.rating} />
             <span className="text-sm text-amber-700">
               {product.rating.toFixed(1)} ({product.reviews?.length || 0}{" "}
               reviews)
@@ -92,7 +60,7 @@ export default async function ProductPage({
           </div>
 
           {/* Description */}
-          <div className="border-t border-amber-200 pt-6">
+          <div className="border-t border-gray-200 pt-6">
             <h2 className="text-lg font-semibold text-amber-950 mb-2">
               Description
             </h2>
@@ -116,21 +84,10 @@ export default async function ProductPage({
           </div>
 
           {/* Actions */}
-          <div className="flex gap-4 pt-4">
-            <button
-              disabled={product.stock === 0}
-              className="flex-1 flex items-center cursor-pointer justify-center gap-2 rounded-lg bg-amber-900 px-6 py-4 text-base font-semibold text-white transition hover:bg-amber-800 disabled:bg-red-300 disabled:cursor-not-allowed"
-            >
-              <ShoppingCartIcon className="h-5 w-5" />
-              Add to Cart
-            </button>
-            <button className="flex items-center cursor-pointer justify-center rounded-lg border-2 border-amber-900 p-4 text-amber-900 transition hover:bg-amber-50">
-              <HeartIcon className="h-6 w-6" />
-            </button>
-          </div>
+          <ProductActions product={product} />
 
           {/* Additional Info */}
-          <div className="border-t border-amber-200 pt-6 space-y-3">
+          <div className="border-t border-gray-200 pt-6 space-y-3">
             <div className="flex justify-between text-sm">
               <span className="text-amber-700">Category:</span>
               <span className="font-medium text-amber-950 capitalize">
