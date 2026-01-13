@@ -41,9 +41,8 @@ function HeaderNavigation() {
               <Link
                 key={href}
                 href={href}
-                className={`text-sm font-sans cursor-pointer ${
-                  pathname === href ? "text-amber-950" : "text-amber-800"
-                }`}
+                className={`text-sm font-sans cursor-pointer ${pathname === href ? "text-amber-950" : "text-amber-800"
+                  }`}
               >
                 {label}
               </Link>
@@ -69,7 +68,7 @@ function HeaderNavigation() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <MenuItems className="absolute left-0 z-20 mt-2 w-[min(24rem,calc(100vw-2rem))] origin-top-left rounded-2xl bg-white py-3 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <MenuItems className="absolute left-0 md:left-auto md:right-0 z-20 mt-2 w-[min(24rem,calc(100vw-2rem))] origin-top-right rounded-2xl bg-white py-3 shadow-lg ring-1 ring-black/5 focus:outline-none">
                 <div className="px-4 pb-2 text-sm font-semibold text-amber-900">
                   Cart
                 </div>
@@ -120,7 +119,7 @@ function HeaderNavigation() {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <MenuItems className="absolute sm:left-[-40px] z-20 mt-2 w-[min(22rem,calc(100vw-2rem))] origin-top-left rounded-2xl bg-white py-3 shadow-lg ring-1 ring-black/5 focus:outline-none">
+              <MenuItems className="absolute left-[-40px] md:left-auto md:right-0 z-20 mt-2 w-[min(22rem,calc(100vw-2rem))] origin-top-right rounded-2xl bg-white py-3 shadow-lg ring-1 ring-black/5 focus:outline-none">
                 <div className="px-4 pb-2 text-sm font-semibold text-amber-900">
                   Favorites
                 </div>
